@@ -17,6 +17,8 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -37,6 +39,7 @@ import frc.robot.subsystems.flywheel.FlywheelIO;
 import frc.robot.subsystems.flywheel.FlywheelIOSim;
 import frc.robot.subsystems.flywheel.FlywheelIOSparkMax;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
+import org.littletonrobotics.junction.networktables.LoggedDashboardInput;
 import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
 
 /**
@@ -47,7 +50,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
  */
 public class RobotContainer {
 
-    private Field2d field = new Field2d();
+  private Field2d field = new Field2d();
 
   // Subsystems
   private final Drive drive;
@@ -147,8 +150,8 @@ public class RobotContainer {
 
   public void robotPeriodic() {
     // Simulation?
-      field.setRobotPose(drive.getPose());
-      SmartDashboard.putData(field);
+    field.setRobotPose(drive.getPose());
+    SmartDashboard.putData("fild", field);
   }
 
   /**
