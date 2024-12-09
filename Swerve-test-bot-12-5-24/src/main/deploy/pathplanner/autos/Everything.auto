@@ -1,0 +1,91 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center To 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "1 to Center"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center To 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "2 To Center"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center To 3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3 To Center"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center To M1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "M1 To Human"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Human To m2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "M2 To Human"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Human to amp"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Amp To 3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3 To Amp"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
