@@ -40,6 +40,7 @@ public class RobotContainer implements InitializingBean{
       private final String Input = "Use Inputs";
       private String TestModeSelected;
 
+  
   /* Controllers */
     private final XboxController driver = new XboxController(JoystickConstants.DRIVER_USB);
     private final Joystick operator = new Joystick(JoystickConstants.OPERATOR_USB);

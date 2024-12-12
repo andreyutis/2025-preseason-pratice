@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "HALProvider": {
     "Other Devices": {
       "navX-Sensor[0]": {
@@ -33,6 +34,12 @@
         },
         "open": true
       }
+=======
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/location": "Field2d"
+>>>>>>> 5f48bc1 (re-adding spring)
     }
   },
   "NetworkTables Info": {

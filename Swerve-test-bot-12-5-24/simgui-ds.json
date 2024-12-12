@@ -88,6 +88,10 @@
       "buttonCount": 0,
       "povCount": 0
     }
+<<<<<<< HEAD
   ],
   "useEnableDisableHotkeys": true
+=======
+  ]
+>>>>>>> 5f48bc1 (re-adding spring)
 }
