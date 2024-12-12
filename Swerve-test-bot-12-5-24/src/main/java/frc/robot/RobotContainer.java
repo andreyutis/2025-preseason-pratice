@@ -10,6 +10,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -26,15 +27,18 @@ import frc.robot.Subsystems.*;
 
 // @Component
 public class RobotContainer {
-  
+
+  /* Test mode choosers */
+    /* Initail */
+      private final SendableChooser<String> TestMode = new SendableChooser<>();
+      private final String Xbox = "Use Xbox controller";
+      private final String Input = "Use Inputs";
+      private String TestModeSelected;
+    
+
   /* Controllers */
     private final XboxController driver = new XboxController(JoystickConstants.DRIVER_USB);
     private final Joystick operator = new Joystick(JoystickConstants.OPERATOR_USB);
-
-  /* Drive Controls */
-    private final int translationAxis = JoystickConstants.LEFT_Y_AXIS;
-    private final int strafeAxis = JoystickConstants.LEFT_X_AXIS;
-    private final int rotationAxis = JoystickConstants.RIGHT_X_AXIS;
 
   /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, JoystickConstants.BACK_BUTTON);
@@ -42,23 +46,35 @@ public class RobotContainer {
   /* Subsystems */
     private final LimelightSubsystem limelight = new LimelightSubsystem();
     private final DriveTrain s_swerve = new DriveTrain();
+    private final TestMode test = new TestMode();
 
   /* Pathplanner stuff */
   // private final SendableChooser<Command> autoChooser;
 
   public RobotContainer() {
     
-    
+    /* Starting the Test Mode selectors*/
+    if(RobotState.isTest()){
+      test.start();
+      TestMode.setDefaultOption("Use Xbox controller", Xbox);
+      TestMode.addOption("Use Inputs", Input);
+      TestModeSelected = TestMode.getSelected();
+      /* Getting values for test mode from smartdashboard */
+          SmartDashboard.putNumber("Translation", 0);
+          SmartDashboard.putNumber("Translation", 0);
+        
+    }
     // autoChooser = AutoBuilder.buildAutoChooser();
     double jiggle_count = SmartDashboard.getNumber("Advancer Jiggle Number Auto", 5);
-    s_swerve.setDefaultCommand(
-      new TelopSwerve(
-        s_swerve,
-        () -> -driver.getLeftY(),
-        () -> -driver.getLeftX(), 
-        () -> -driver.getRightX()
-        )
-    );
+      s_swerve.setDefaultCommand(
+        new TelopSwerve(
+          s_swerve,
+          () -> -driver.getLeftY(),
+          () -> -driver.getLeftX(), 
+          () -> -driver.getRightX()
+          )
+      );
+    
     
     configureBindings();
       /* Intake */
@@ -73,11 +89,34 @@ public class RobotContainer {
 
         // SmartDashboard.putData("Auto Chooser", autoChooser);
   }
+  
+  public void testPeriodic() {
+   switch (TestModeSelected) {
+        case Input:
+          s_swerve.setDefaultCommand(
+            new TelopSwerve(
+              s_swerve,
+              () -> test.translate(),
+              () -> test.strafe(),
+              () -> test.rotate()
+              )
+          );
 
-  public void teleopInit() {
-    // shooter_.Stop();
-    // intake.Stop();
-    // advancer.Stop();
+
+          break;
+      
+        default:
+          s_swerve.setDefaultCommand(
+            new TelopSwerve(
+              s_swerve,
+              () -> -driver.getLeftY(),
+              () -> -driver.getLeftX(), 
+              () -> -driver.getRightX()
+              )
+          );
+
+          break;
+      }
   }
 
   private void configureBindings() {

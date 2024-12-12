@@ -123,6 +123,16 @@ private final Translation2d m_backRightLocation = new Translation2d(-0.45085, -0
             public static final double JIGGLE_SPEED_NEO = 0.4;
     }
 
+    public final static class FlagsConstants {
+        /* Ints */
+            public final static int GreenFlagMotor = 9;
+            public final static int RedFlagMotor = 10;
+            public final static int YellowFlagMotor = 11;
+        
+        /* Doubles */
+            public final static double FlagSpeed = 0.2;
+    }
+
     public final static class JoystickConstants{
         public final static int DRIVER_USB = 0;
         public final static int OPERATOR_USB = 1;

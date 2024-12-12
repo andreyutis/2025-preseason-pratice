@@ -20,10 +20,12 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.lib.util.SwerveModuleConstants;
 import frc.robot.Constanst;
+import frc.robot.Robot;
 
 public class SwerveModule extends Command {
 
@@ -123,6 +125,7 @@ switch (moduleNumber) {
     var retVal =  m_turningEncoder.getVoltage() / RobotController.getVoltage5V(); // convert voltage to %
     retVal = 2.0 * Math.PI * retVal;    // get % of circle encoder is reading
     //SmartDashboard.putNumber("module " + moduleNumber, retVal);
+    if(RobotState.isTest()){
 SmartDashboard.putNumber("encoder raw " + moduleNumber, retVal);
 
     retVal = (retVal + encoderOffset) % (2.0 * Math.PI);    // apply offset for this encoder and map it back onto [0, 2pi]
@@ -130,7 +133,7 @@ SmartDashboard.putNumber("encoder raw " + moduleNumber, retVal);
 //    retVal = retVal - Math.PI;
  SmartDashboard.putNumber("encoder " + moduleNumber, (retVal * 1000) / 1000.0);
  SmartDashboard.putNumber("encoder degrees " + moduleNumber, (retVal *(180/Math.PI) * 1000) / 1000.0);
- 
+    }
     return (retVal);
 }
 
@@ -193,12 +196,17 @@ SmartDashboard.putNumber("encoder raw " + moduleNumber, retVal);
     final double turnOutput =
         m_turningPIDController.calculate(encoderValue(), state.angle.getRadians());
 // SmartDashboard.putNumber("pid " + moduleNumber, turnOutput);
- SmartDashboard.putNumber("target " + moduleNumber, state.angle.getRadians());
+ 
     final double turnFeedforward =
         m_turnFeedforward.calculate(m_turningPIDController.getSetpoint().velocity);
 
     m_driveMotor.setVoltage(driveOutput + driveFeedforward);
     m_turningMotor.setVoltage(turnOutput + turnFeedforward);
+    if(RobotState.isTest()) {
+      SmartDashboard.putNumber("Driving stuff", driveOutput + driveFeedforward);
+      SmartDashboard.putNumber("Turning stuff", turnOutput + turnFeedforward);
+      SmartDashboard.putNumber("target " + moduleNumber, state.angle.getRadians());
+    }
     
   }
   

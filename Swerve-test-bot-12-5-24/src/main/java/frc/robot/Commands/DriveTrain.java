@@ -25,6 +25,7 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -177,15 +178,15 @@ private double rot_cur;
     m_backLeft.setDesiredState(swerveModuleStates[2]);
     m_backRight.setDesiredState(swerveModuleStates[3]);
 
-  /*
-SmartDashboard.putString("gyro", m_gyro.getRotation2d().toString());
+    if(RobotState.isTest()) {
+      SmartDashboard.putString("gyro", m_gyro.getRotation2d().toString());
 
+      SmartDashboard.putString("module 0", swerveModuleStates[0].toString());
+      SmartDashboard.putString("module 1", swerveModuleStates[1].toString());
+      SmartDashboard.putString("module 2", swerveModuleStates[2].toString());
+      SmartDashboard.putString("module 3", swerveModuleStates[3].toString());
 
-    SmartDashboard.putString("module 0", swerveModuleStates[0].toString());
-    SmartDashboard.putString("module 1", swerveModuleStates[1].toString());
-    SmartDashboard.putString("module 2", swerveModuleStates[2].toString());
-    SmartDashboard.putString("module 3", swerveModuleStates[3].toString());
-*/
+    }
     xSpeed_cur = xSpeed;
     ySpeed_cur = ySpeed;
     rot_cur = rot;
