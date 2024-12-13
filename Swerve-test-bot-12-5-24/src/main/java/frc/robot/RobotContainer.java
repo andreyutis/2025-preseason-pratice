@@ -49,7 +49,7 @@ public class RobotContainer {
     private final TestMode test = new TestMode();
 
   /* Pathplanner stuff */
-  // private final SendableChooser<Command> autoChooser;
+    private final SendableChooser<Command> autoChoosers;
 
   public RobotContainer() {
     
@@ -64,7 +64,7 @@ public class RobotContainer {
           SmartDashboard.putNumber("Translation", 0);
         
     }
-    // autoChooser = AutoBuilder.buildAutoChooser();
+    autoChoosers = AutoBuilder.buildAutoChooser("Tuning auto");
     double jiggle_count = SmartDashboard.getNumber("Advancer Jiggle Number Auto", 5);
       s_swerve.setDefaultCommand(
         new TelopSwerve(
@@ -87,7 +87,7 @@ public class RobotContainer {
       /* Advancer Commands */   
         // NamedCommands.registerCommand("Advancer Jiggle", new AdvancerJiggle(advancer, jiggle_count));
 
-        // SmartDashboard.putData("Auto Chooser", autoChooser);
+        SmartDashboard.putData("Auto Chooser", autoChoosers);
   }
   
   public void testPeriodic() {
@@ -140,7 +140,7 @@ public class RobotContainer {
         // new JoystickButton (operator, JoystickConstants.START_BUTTON).onTrue(new AdvancerJiggle(advancer, SmartDashboard.getNumber("Advancer Jiggle Number Teleop", 5)));
   }
 
-  // public Command getAutonomousCommand() {
-  //   return autoChooser.getSelected();
-  // }
+  public Command getAutonomousCommand() {
+    return autoChoosers.getSelected();
+  }
 }
