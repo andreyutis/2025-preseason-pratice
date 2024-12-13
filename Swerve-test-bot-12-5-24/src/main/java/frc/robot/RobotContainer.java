@@ -21,6 +21,9 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Commands.DriveTrain;
+import frc.robot.Commands.RunGreenFlagCommand;
+import frc.robot.Commands.RunRedFlagCommand;
+import frc.robot.Commands.RunYellowFlagCommand;
 import frc.robot.Commands.TelopSwerve;
 import frc.robot.Constanst.JoystickConstants;
 import frc.robot.Subsystems.*;
@@ -45,6 +48,7 @@ public class RobotContainer {
 
   /* Subsystems */
     private final LimelightSubsystem limelight = new LimelightSubsystem();
+    private final FlagsSubsystem flag = new FlagsSubsystem();
     private final DriveTrain s_swerve = new DriveTrain();
     private final TestMode test = new TestMode();
 
@@ -54,16 +58,12 @@ public class RobotContainer {
   public RobotContainer() {
     
     /* Starting the Test Mode selectors*/
-    if(RobotState.isTest()){
       test.start();
       TestMode.setDefaultOption("Use Xbox controller", Xbox);
       TestMode.addOption("Use Inputs", Input);
       TestModeSelected = TestMode.getSelected();
-      /* Getting values for test mode from smartdashboard */
-          SmartDashboard.putNumber("Translation", 0);
-          SmartDashboard.putNumber("Translation", 0);
-        
-    }
+      SmartDashboard.putData(TestMode);
+    
     autoChoosers = AutoBuilder.buildAutoChooser("Tuning auto");
     double jiggle_count = SmartDashboard.getNumber("Advancer Jiggle Number Auto", 5);
       s_swerve.setDefaultCommand(
@@ -77,15 +77,11 @@ public class RobotContainer {
     
     
     configureBindings();
-      /* Intake */
-        // NamedCommands.registerCommand("Intake", new IntakeLoad(intake, advancer));
-        // NamedCommands.registerCommand("Outtake", new IntakeOut(intake, advancer));
-      /* Shooter Commands*/
-        // NamedCommands.registerCommand("Speaker Shot", new SpeakerShoot(shooter_, advancer));
-        // NamedCommands.registerCommand("Lob shot", new ShooterLob(shooter_, advancer));
-        // NamedCommands.registerCommand("Rev Shooter", new AutoRevShooter(shooter_));
-      /* Advancer Commands */   
-        // NamedCommands.registerCommand("Advancer Jiggle", new AdvancerJiggle(advancer, jiggle_count));
+
+      /* Flags */
+        NamedCommands.registerCommand("Green Flag", new RunGreenFlagCommand(flag));
+        NamedCommands.registerCommand("Red Flag", new RunRedFlagCommand(flag));
+        NamedCommands.registerCommand("Yellow Flag", new RunYellowFlagCommand(flag));
 
         SmartDashboard.putData("Auto Chooser", autoChoosers);
   }
@@ -125,19 +121,10 @@ public class RobotContainer {
       zeroGyro.onTrue (new InstantCommand(() -> s_swerve.ResetDrives()));
 
     /* Operator Controls */
-      /* Shooter Controls 
-        new JoystickButton (operator, JoystickConstants.GREEN_BUTTON).onTrue(new SpeakerShoot(shooter_, advancer));
-        new Trigger (new JoystickButton(operator, JoystickConstants.GREEN_BUTTON)).and(
-          new Trigger(() -> (advancer.LowerBeam.get()))).onTrue(new ParallelCommandGroup(new ShooterIntake(shooter_), new RetractToBottom(advancer)));
-        new Trigger(() -> limelight.InRange(5)).and(new Trigger(() -> (advancer.LowerBeam.get())))
-          .onTrue(new AutoRevShooter(shooter_));
-        new JoystickButton (operator, JoystickConstants.BLUE_BUTTON).onTrue(new ShooterLob(shooter_, advancer));
-        new JoystickButton (operator, JoystickConstants.YELLOW_BUTTON).onTrue(new ChangeShot(shooter_, advancer));
-      /* Intake Controls 
-        new JoystickButton (operator, JoystickConstants.RIGHT_BUMPER).onTrue(new IntakeLoad(intake, advancer));
-        new JoystickButton (operator, JoystickConstants.LEFT_BUMPER).onTrue(new IntakeOut(intake, advancer));
-      /* Advancer stuff */
-        // new JoystickButton (operator, JoystickConstants.START_BUTTON).onTrue(new AdvancerJiggle(advancer, SmartDashboard.getNumber("Advancer Jiggle Number Teleop", 5)));
+      /* Flag Controls */
+        new JoystickButton(operator, Constanst.JoystickConstants.GREEN_BUTTON).onTrue(new RunGreenFlagCommand(flag));
+        new JoystickButton(operator, Constanst.JoystickConstants.RED_BUTTON).onTrue(new RunRedFlagCommand(flag));
+        new JoystickButton(operator, Constanst.JoystickConstants.YELLOW_BUTTON).onTrue(new RunYellowFlagCommand(flag));
   }
 
   public Command getAutonomousCommand() {

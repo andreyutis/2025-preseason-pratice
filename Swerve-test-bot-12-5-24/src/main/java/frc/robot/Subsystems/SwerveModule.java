@@ -15,7 +15,6 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Preferences;
@@ -25,7 +24,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.lib.util.SwerveModuleConstants;
 import frc.robot.Constanst;
-import frc.robot.Robot;
 
 public class SwerveModule extends Command {
 
@@ -203,8 +201,8 @@ SmartDashboard.putNumber("encoder raw " + moduleNumber, retVal);
 
     m_driveMotor.set((driveOutput + driveFeedforward) * .25);
     m_turningMotor.setVoltage(turnOutput + turnFeedforward);
-    SmartDashboard.putNumber("Dirve", (driveOutput + driveFeedforward) * .25);
     if(RobotState.isTest()) {
+      SmartDashboard.putNumber("Dirve", (driveOutput + driveFeedforward) * .25);
       SmartDashboard.putNumber("Driving stuff", driveOutput + driveFeedforward);
       SmartDashboard.putNumber("Turning stuff", turnOutput + turnFeedforward);
       SmartDashboard.putNumber("target " + moduleNumber, state.angle.getRadians());
