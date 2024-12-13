@@ -89,11 +89,9 @@ public class TelopSwerve extends Command {
            strafeVal,
            translationVal,
            rotationVal,
-           true
+           false
         );
-        i++;
         SmartDashboard.putString("swerve mode", mode);
-        SmartDashboard.putNumber("shot", i);
     }
 
     @Override

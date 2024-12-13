@@ -11,6 +11,9 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 // import com.pathplanner.lib.config.PIDConstants;
 // import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.math.VecBuilder;
@@ -39,7 +42,7 @@ import frc.robot.Subsystems.SwerveModule;
 /** Represents a swerve drive style drivetrain. */
 // @Component
 public class DriveTrain extends SubsystemBase {
-  public static final double kMaxSpeed = 4.47; // was 3 meters per second
+  public static final double kMaxSpeed = 12; // was 4.47 meters per second
   public static final double kMaxAngularSpeed = 4.41 * 2 * Math.PI; // was Math.PI for 1/2 rotation per second
   
   double Ptranslate = 10.0;
@@ -112,34 +115,33 @@ private double rot_cur;
                 VecBuilder.fill(0.001, 0.001, 0.001, 0.1, 0.1, 0.005, 0.005));
 
     m_gyro.reset();
-    /*try{
-      RobotConfig config = RobotConfig.fromGUISettings();
-    AutoBuilder.configure(
-      this::getPose, // Robot pose supplier
-      this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
-      this::getSpeed, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-      (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
-      new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
-              new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
-              new PIDConstants(5.0, 0.0, 0.0) // Rotation PID constants
-      ),
-      config, // The robot configuration
-      () -> {
-        // Boolean supplier that controls when the path will be mirrored for the red alliance
-        // This will flip the path being followed to the red side of the field.
-        // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+    
+     AutoBuilder.configureHolonomic(
+    this::getPose, // Robot pose supplier
+    this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
+    this::getSpeed, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+    this::driveRobotRelative, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+    new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+            new PIDConstants(0, 0, 0.0), // Translation PID constants
+            new PIDConstants(16.7, 2.0, 0.0), // Rotation PID constants
+            4.5, // Max module speed, in m/s
+            0.4, // Drive base radius in meters. Distance from robot center to furthest module.
+            new ReplanningConfig() // Default path replanning config. See the API for the options here
+    ),//540.0
+    //720.0
+    () -> {
+      // Boolean supplier that controls when the path will be mirrored for the red alliance
+      // This will flip the path being followed to the red side of the field.
+      // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
 
-        var alliance = DriverStation.getAlliance();
-        if (alliance.isPresent()) {
-          return alliance.get() == DriverStation.Alliance.Red;
-        }
-        return false;
-      },
+      var alliance = DriverStation.getAlliance();
+      if (alliance.isPresent()) {
+        return alliance.get() == DriverStation.Alliance.Red;
+      }
+      return false;
+    },
     this // Reference to this subsystem to set requirements
 );
-}catch(Exception e){
-  DriverStation.reportError("Failed to load PathPlanner config and configure AutoBuilder", e.getStackTrace());
-}*/
   }
 
   public void ResetDrives () {

@@ -128,12 +128,13 @@ switch (moduleNumber) {
     if(RobotState.isTest()){
 SmartDashboard.putNumber("encoder raw " + moduleNumber, retVal);
 
-    retVal = (retVal + encoderOffset) % (2.0 * Math.PI);    // apply offset for this encoder and map it back onto [0, 2pi]
-      // might need this so we're in the same range as the pid controller is expecting.
-//    retVal = retVal - Math.PI;
+    
  SmartDashboard.putNumber("encoder " + moduleNumber, (retVal * 1000) / 1000.0);
  SmartDashboard.putNumber("encoder degrees " + moduleNumber, (retVal *(180/Math.PI) * 1000) / 1000.0);
     }
+    retVal = (retVal + encoderOffset) % (2.0 * Math.PI);    // apply offset for this encoder and map it back onto [0, 2pi]
+      // might need this so we're in the same range as the pid controller is expecting.
+//    retVal = retVal - Math.PI;
     return (retVal);
 }
 
@@ -200,8 +201,9 @@ SmartDashboard.putNumber("encoder raw " + moduleNumber, retVal);
     final double turnFeedforward =
         m_turnFeedforward.calculate(m_turningPIDController.getSetpoint().velocity);
 
-    m_driveMotor.setVoltage(driveOutput + driveFeedforward);
+    m_driveMotor.set((driveOutput + driveFeedforward) * .25);
     m_turningMotor.setVoltage(turnOutput + turnFeedforward);
+    SmartDashboard.putNumber("Dirve", (driveOutput + driveFeedforward) * .25);
     if(RobotState.isTest()) {
       SmartDashboard.putNumber("Driving stuff", driveOutput + driveFeedforward);
       SmartDashboard.putNumber("Turning stuff", turnOutput + turnFeedforward);
