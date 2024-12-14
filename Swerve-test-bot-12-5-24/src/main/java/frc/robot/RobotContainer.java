@@ -22,13 +22,13 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Commands.DriveTrain;
 import frc.robot.Commands.RunGreenFlagCommand;
 import frc.robot.Commands.RunRedFlagCommand;
 import frc.robot.Commands.RunYellowFlagCommand;
-import frc.robot.Commands.TelopSwerve;
+import frc.robot.Commands.TeleopAdvantage;
 import frc.robot.Constanst.JoystickConstants;
 import frc.robot.Subsystems.*;
+import frc.robot.Subsystems.drive.Drive;
 
 @Component
 public class RobotContainer implements InitializingBean{
@@ -55,7 +55,7 @@ public class RobotContainer implements InitializingBean{
     @Autowired
     private LimelightSubsystem limelight;
     @Autowired
-    private DriveTrain s_swerve;
+    private Drive s_swerve;
 
   /* Pathplanner stuff */
     private SendableChooser<Command> autoChoosers;
@@ -71,15 +71,14 @@ public class RobotContainer implements InitializingBean{
       SmartDashboard.putData(TestMode);
     autoChoosers = AutoBuilder.buildAutoChooser();
     double jiggle_count = SmartDashboard.getNumber("Advancer Jiggle Number Auto", 5);
-      s_swerve.setDefaultCommand(
-        new TelopSwerve(
-          s_swerve,
-          () -> -driver.getLeftY(),
-          () -> -driver.getLeftX(), 
-          () -> -driver.getRightX()
-          )
-      );
-    
+    s_swerve.setDefaultCommand(
+      new TeleopAdvantage(
+        s_swerve,
+        () -> -driver.getLeftY(),
+        () -> -driver.getLeftX(), 
+        () -> -driver.getRightX()
+        )
+    );
     
     configureBindings();
 
@@ -95,7 +94,7 @@ public class RobotContainer implements InitializingBean{
    switch (TestModeSelected) {
         case Input:
           s_swerve.setDefaultCommand(
-            new TelopSwerve(
+            new TeleopAdvantage(
               s_swerve,
               () -> test.translate(),
               () -> test.strafe(),
@@ -108,7 +107,7 @@ public class RobotContainer implements InitializingBean{
       
         default:
           s_swerve.setDefaultCommand(
-            new TelopSwerve(
+            new TeleopAdvantage(
               s_swerve,
               () -> -driver.getLeftY(),
               () -> -driver.getLeftX(), 

@@ -2,10 +2,14 @@ package frc.robot;
 
 
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.RobotBase;
 import frc.lib.util.SwerveModuleConstants;
 import frc.robot.Commands.DriveTrain;
 
 public class Constanst {
+
+    public static final boolean IS_REAL = RobotBase.isReal();
+
     public static final double stickDeadband = 0.3;
     
     public static final class SwerveConstants {
@@ -54,7 +58,7 @@ private final Translation2d m_backRightLocation = new Translation2d(-0.45085, -0
             public static final int canCoderID = 0;
             public static final double angleOffset = 3.201315307;
             public static final SwerveModuleConstants constants = 
-                new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID);
+                new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, 3.769512307);
         }
 
         /* Front Right Module - Module 1 */
@@ -64,7 +68,7 @@ private final Translation2d m_backRightLocation = new Translation2d(-0.45085, -0
             public static final int canCoderID = 1;
             public static final double angleOffset = 5.333449307;
             public static final SwerveModuleConstants constants = 
-                new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID);
+                new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, 0.6210603266);
         }
         
         /* Back Left Module - Module 2 */
@@ -74,7 +78,7 @@ private final Translation2d m_backRightLocation = new Translation2d(-0.45085, -0
             public static final int canCoderID = 2;
             public static final double angleOffset = 0.2082833072;
             public static final SwerveModuleConstants constants = 
-                new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID);
+                new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, 4.9206722876);
         }
 
         /* Back Right Module - Module 3 */
@@ -84,7 +88,7 @@ private final Translation2d m_backRightLocation = new Translation2d(-0.45085, -0
             public static final int canCoderID = 3;
             public static final double angleOffset = 3.769512307;
             public static final SwerveModuleConstants constants = 
-                new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID);
+                new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, 3.201315307);
         }
     }
 
