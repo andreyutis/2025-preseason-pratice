@@ -53,7 +53,7 @@ public class RobotContainer {
     private final TestMode test = new TestMode();
 
   /* Pathplanner stuff */
-   // private final SendableChooser<Command> autoChoosers;
+    private final SendableChooser<Command> autoChoosers;
 
   public RobotContainer() {
     
@@ -63,8 +63,7 @@ public class RobotContainer {
       TestMode.addOption("Use Inputs", Input);
       TestModeSelected = TestMode.getSelected();
       SmartDashboard.putData(TestMode);
-    SmartDashboard.putRaw("AHH", AutoBuilder.getAllAutoNames());
-    //autoChoosers = AutoBuilder.buildAutoChooser("Tuning auto");
+    autoChoosers = AutoBuilder.buildAutoChooser("Tuning auto");
     double jiggle_count = SmartDashboard.getNumber("Advancer Jiggle Number Auto", 5);
       s_swerve.setDefaultCommand(
         new TelopSwerve(
