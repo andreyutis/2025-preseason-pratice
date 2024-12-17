@@ -89,7 +89,7 @@ public class TelopSwerve extends Command {
            strafeVal,
            translationVal,
            rotationVal,
-           false
+           true
         );
         SmartDashboard.putString("swerve mode", mode);
     }

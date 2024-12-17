@@ -42,6 +42,8 @@ import frc.robot.Subsystems.SwerveModule;
 /** Represents a swerve drive style drivetrain. */
 // @Component
 public class DriveTrain extends SubsystemBase {
+
+  int ii = 0;
   public static final double kMaxSpeed = 12; // was 4.47 meters per second
   public static final double kMaxAngularSpeed = 4.41 * 2 * Math.PI; // was Math.PI for 1/2 rotation per second
   
@@ -142,6 +144,7 @@ private double rot_cur;
     },
     this // Reference to this subsystem to set requirements
 );
+SmartDashboard.putBoolean("Configured", AutoBuilder.isConfigured());
   }
 
   public void ResetDrives () {
@@ -166,6 +169,8 @@ private double rot_cur;
    */
   
   public void driveRobotRelative(ChassisSpeeds chassisSpeedsIn) {
+    ii++;
+    SmartDashboard.putNumber("dribe", ii);
     drive(chassisSpeedsIn.vxMetersPerSecond, chassisSpeedsIn.vyMetersPerSecond, chassisSpeedsIn.omegaRadiansPerSecond, false);
   }
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {

@@ -43,7 +43,12 @@ public class SwerveModule extends Command {
   private final RelativeEncoder m_turningEncoderREV;
 
   // Gains are for example purposes only - must be determined for your own robot!
-  private final PIDController m_drivePIDController = new PIDController(0, 0, 0);
+  private final ProfiledPIDController m_drivePIDController = new ProfiledPIDController(
+    .0001, 
+    0.0,
+    0,
+    new TrapezoidProfile.Constraints(15.1,18.8)
+    );
 
   // Gains are for example purposes only - must be determined for your own robot!
   private final ProfiledPIDController m_turningPIDController =
@@ -199,11 +204,10 @@ SmartDashboard.putNumber("encoder raw " + moduleNumber, retVal);
     final double turnFeedforward =
         m_turnFeedforward.calculate(m_turningPIDController.getSetpoint().velocity);
 
-    m_driveMotor.set((driveOutput + driveFeedforward) * .25);
+    m_driveMotor.set((driveOutput + driveFeedforward) / 3.5);
     m_turningMotor.setVoltage(turnOutput + turnFeedforward);
     if(RobotState.isTest()) {
-      SmartDashboard.putNumber("Dirve", (driveOutput + driveFeedforward) * .25);
-      SmartDashboard.putNumber("Driving stuff", driveOutput + driveFeedforward);
+      SmartDashboard.putNumber("Dirve", (driveOutput + driveFeedforward) /3.5);
       SmartDashboard.putNumber("Turning stuff", turnOutput + turnFeedforward);
       SmartDashboard.putNumber("target " + moduleNumber, state.angle.getRadians());
     }

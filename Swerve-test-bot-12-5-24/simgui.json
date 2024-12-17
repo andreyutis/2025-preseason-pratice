@@ -1,12 +1,7 @@
 {
   "HALProvider": {
     "Other Devices": {
-      "SPARK MAX [7]": {
-        "header": {
-          "open": true
-        }
-      },
-      "SPARK MAX [8]": {
+      "navX-Sensor[0]": {
         "header": {
           "open": true
         }
@@ -19,6 +14,25 @@
       "/SmartDashboard/Auto Chooser": "String Chooser",
       "/SmartDashboard/Rotate or Strafe or strait?": "String Chooser",
       "/SmartDashboard/SendableChooser[0]": "String Chooser"
+    }
+  },
+  "NetworkTables": {
+    "transitory": {
+      "PathPlanner": {
+        "open": true
+      },
+      "SmartDashboard": {
+        "Auto Chooser": {
+          "open": true,
+          "string[]##v_/SmartDashboard/Auto Chooser/options": {
+            "open": true
+          }
+        },
+        "Rotate or Strafe or strait?": {
+          "open": true
+        },
+        "open": true
+      }
     }
   },
   "NetworkTables Info": {

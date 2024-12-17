@@ -63,7 +63,7 @@ public class RobotContainer {
       TestMode.addOption("Use Inputs", Input);
       TestModeSelected = TestMode.getSelected();
       SmartDashboard.putData(TestMode);
-    autoChoosers = AutoBuilder.buildAutoChooser("Tuning auto");
+    autoChoosers = AutoBuilder.buildAutoChooser();
     double jiggle_count = SmartDashboard.getNumber("Advancer Jiggle Number Auto", 5);
       s_swerve.setDefaultCommand(
         new TelopSwerve(
@@ -121,9 +121,9 @@ public class RobotContainer {
 
     /* Operator Controls */
       /* Flag Controls */
-        new JoystickButton(operator, Constanst.JoystickConstants.GREEN_BUTTON).onTrue(new RunGreenFlagCommand(flag));
-        new JoystickButton(operator, Constanst.JoystickConstants.RED_BUTTON).onTrue(new RunRedFlagCommand(flag));
-        new JoystickButton(operator, Constanst.JoystickConstants.YELLOW_BUTTON).onTrue(new RunYellowFlagCommand(flag));
+        // new JoystickButton(operator, Constanst.JoystickConstants.GREEN_BUTTON).onTrue(new RunGreenFlagCommand(flag));
+        // new JoystickButton(operator, Constanst.JoystickConstants.RED_BUTTON).onTrue(new RunRedFlagCommand(flag));
+        // new JoystickButton(operator, Constanst.JoystickConstants.YELLOW_BUTTON).onTrue(new RunYellowFlagCommand(flag));
   }
 
   public Command getAutonomousCommand() {
