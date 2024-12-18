@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "HALProvider": {
     "Other Devices": {
       "navX-Sensor[0]": {
@@ -34,49 +33,9 @@
         },
         "open": true
       }
-=======
-  "NTProvider": {
-    "types": {
-      "/FMSInfo": "FMSInfo",
-      "/SmartDashboard/location": "Field2d"
-<<<<<<< HEAD
->>>>>>> 5f48bc1 (re-adding spring)
-=======
-    },
-    "windows": {
-      "/SmartDashboard/location": {
-        "bottom": 1476,
-        "height": 8.210550308227539,
-        "left": 150,
-        "right": 2961,
-        "top": 79,
-        "width": 16.541748046875,
-        "window": {
-          "visible": true
-        }
-      }
->>>>>>> 97ee94f (introducing sim and concepts from AdvantageKit)
     }
   },
   "NetworkTables Info": {
     "visible": true
-  },
-  "Plot": {
-    "Plot <0>": {
-      "plots": [
-        {
-          "backgroundColor": [
-            0.0,
-            0.0,
-            0.0,
-            0.8500000238418579
-          ],
-          "height": 338
-        }
-      ],
-      "window": {
-        "visible": false
-      }
-    }
   }
 }

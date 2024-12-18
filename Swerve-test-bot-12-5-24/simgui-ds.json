@@ -99,8 +99,7 @@
       "povCount": 0
     }
   ],
-  "useEnableDisableHotkeys": true
-  ],
+  "useEnableDisableHotkeys": true,
   "robotJoysticks": [
     {
       "guid": "Keyboard0"
